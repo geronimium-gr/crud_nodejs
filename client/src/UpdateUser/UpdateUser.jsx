@@ -11,7 +11,7 @@ import {
 import { useFormik } from "formik";
 import axios from "axios";
 import * as yup from "yup";
-const AddUsers = ({ refreshData, refreshToggle }) => {
+const UpdateUser = ({ singleUser, handleClose }) => {
   const validationSchema = yup.object().shape({
     firstName: yup.string().required("First Name cannot be empty."),
     lastName: yup.string().required("Last Name cannot be empty."),
@@ -22,37 +22,33 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      age: "",
-      address: "",
-      bio: "",
+      id: singleUser.id,
+      firstName: singleUser.firstName,
+      lastName: singleUser.lastName,
+      age: singleUser.age,
+      address: singleUser.address,
+      bio: singleUser.bio,
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       // alert(JSON.stringify(values, null, 2));
-      axios.post("http://localhost:3001/add-user", values).then((res) => {
+      axios.put("http://localhost:3001/update-user", values).then((res) => {
         console.log(values);
       });
-      refreshToggle(!refreshData);
       resetForm();
+      handleClose();
     },
   });
   return (
-    <Container>
-      <h1>Add User</h1>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "27ch" },
-        }}
-        onSubmit={formik.handleSubmit}
-      >
+    <Container component={"span"}>
+      <Box component="form" onSubmit={formik.handleSubmit}>
         <div>
           <TextField
             id="outlined-multiline-flexible"
             label="First Name"
+            fullWidth
             name="firstName"
+            margin="normal"
             value={formik.values.firstName}
             onChange={formik.handleChange}
             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -61,7 +57,9 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
           <TextField
             id="outlined-textarea"
             label="Last Name"
+            fullWidth
             name="lastName"
+            margin="normal"
             value={formik.values.lastName}
             onChange={formik.handleChange}
             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -70,8 +68,10 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
           <TextField
             id="outlined-textarea"
             label="Age"
+            fullWidth
             type="number"
             name="age"
+            margin="normal"
             value={formik.values.age}
             onChange={formik.handleChange}
             error={formik.touched.age && Boolean(formik.errors.age)}
@@ -84,8 +84,9 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
             label="Address"
             multiline
             fullWidth
-            rows={4}
+            rows={3}
             name="address"
+            margin="normal"
             value={formik.values.address}
             onChange={formik.handleChange}
             error={formik.touched.address && Boolean(formik.errors.address)}
@@ -96,8 +97,9 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
             label="Bio"
             multiline
             fullWidth
-            rows={4}
+            rows={3}
             name="bio"
+            margin="normal"
             value={formik.values.bio}
             onChange={formik.handleChange}
             error={formik.touched.bio && Boolean(formik.errors.bio)}
@@ -106,7 +108,7 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
         </div>
         <div>
           <Button variant="contained" type="submit">
-            Add User
+            Update User
           </Button>
         </div>
       </Box>
@@ -114,4 +116,4 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
   );
 };
 
-export default AddUsers;
+export default UpdateUser;
