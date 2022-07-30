@@ -34,8 +34,8 @@ const AddUsers = ({ refreshData, refreshToggle }) => {
       axios.post("http://localhost:3001/add-user", values).then((res) => {
         console.log(values);
       });
-      refreshToggle(!refreshData);
       resetForm();
+      refreshToggle(!refreshData);
     },
   });
   return (

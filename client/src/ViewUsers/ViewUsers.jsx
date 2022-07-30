@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import UpdateUser from "../UpdateUser/UpdateUser";
 
-const ViewUsers = ({ refreshData }) => {
+const ViewUsers = ({ refreshData, refreshToggle }) => {
   const [user, setUser] = useState([]);
   const [open, setOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -81,15 +81,18 @@ const ViewUsers = ({ refreshData }) => {
     },
   ];
 
-  const toggleShow = () => setOpen((p) => !p);
+  const toggleShow = () => {
+    refreshToggle(!refreshData);
+    setOpen((p) => !p);
+  };
   const toggleDelete = () => setDeleteDialog((p) => !p);
 
   const handleDelete = () => {
     axios
       .delete(`http://localhost:3001/delete-user/${getTitle.id}`)
-      .then((msg) => {
+      .then(() => {
         toggleDelete();
-        console.log(msg);
+        refreshToggle(!refreshData);
       })
       .catch((err) => {
         console.log(err);

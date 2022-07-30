@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <AddUsers refreshData={refreshData} refreshToggle={refreshToggle} />
-      <ViewUsers refreshData={refreshData} />
+      <ViewUsers refreshData={refreshData} refreshToggle={refreshToggle} />
     </div>
   );
 }
