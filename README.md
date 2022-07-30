@@ -1,6 +1,7 @@
 # Sample Node JS CRUD Application
 
 ## Setup
+- Create Database ```crud_nodejs_db``` from PostgreSQL
 - For the ```client``` directory
 
 ```js
