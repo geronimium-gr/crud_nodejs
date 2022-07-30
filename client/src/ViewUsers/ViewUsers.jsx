@@ -21,6 +21,8 @@ const ViewUsers = ({ refreshData, refreshToggle }) => {
   const [singleUser, setSingleUser] = useState([]);
   const [getTitle, setGetTitle] = useState([]);
 
+  const [refreshUpdate, setRefreshUpdate] = useState(false);
+
   const columns = [
     { field: "id", headerName: "ID", width: 20, flex: 1 },
     {
@@ -82,10 +84,12 @@ const ViewUsers = ({ refreshData, refreshToggle }) => {
   ];
 
   const toggleShow = () => {
-    refreshToggle(!refreshData);
     setOpen((p) => !p);
+    refreshToggleUpdate();
   };
   const toggleDelete = () => setDeleteDialog((p) => !p);
+
+  const refreshToggleUpdate = () => setRefreshUpdate(!refreshUpdate);
 
   const handleDelete = () => {
     axios
@@ -103,7 +107,7 @@ const ViewUsers = ({ refreshData, refreshToggle }) => {
     axios.get("http://localhost:3001/get-users").then((response) => {
       setUser(response.data);
     });
-  }, [refreshData]);
+  }, [refreshData, refreshUpdate]);
 
   return (
     <div style={{ height: 400, padding: "45px" }}>

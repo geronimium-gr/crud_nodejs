@@ -31,7 +31,6 @@ const UpdateUser = ({ singleUser, handleClose }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      // alert(JSON.stringify(values, null, 2));
       axios.put("http://localhost:3001/update-user", values).then((res) => {
         console.log(values);
       });
